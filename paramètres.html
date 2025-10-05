@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Paramètres - SKy9Music</title>
+  <link rel="icon" href="assets/imgs/ico.jpg" />
+<style>
+    body {
+      background: linear-gradient(to bottom, #00ffea 0%, #001749 300px);
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+</style>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gotham', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  
+    body {
+    background-color: #121212;
+    color: #ffffff;
+    line-height: 1.5;
+  }
+    .titlebar-spotify {
+      height: 32px;
+      width: 100%;
+      background: #fbff0000;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      -webkit-app-region: drag;
+      padding: 0 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .drag-region {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: bold;
+      color: #b3b3b3;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 8px;
+      -webkit-app-region: no-drag;
+    }
+
+    .window-controls button {
+      width: 32px;
+      height: 28px;
+      background: transparent;
+      color: #b3b3b3;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 28px;
+      padding: 0;
+    }
+
+    .window-controls button:hover {
+      background-color: #3e3e3e;
+    }
+
+    .window-controls .close:hover {
+      background-color: #e81123;
+      color: white;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .card {
+      background-color: #242424;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    #header-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    label {
+      font-size: 18px;
+    }
+    select, button {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+    select {
+      background-color: #242424;
+      color: #fff;
+    }
+    button {
+      background: linear-gradient(to bottom, #00ffea 0%, #002a85 300px);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+background: linear-gradient(to bottom, #00ffea 0%, #002a85 300px);
+    }
+    .status {
+      margin-top: 10px;
+      font-style: italic;
+      color: #ccc;
+    }
+    .footer-links {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .main-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+
+    <div class="container">
+      <div class="card">
+        <h1 id="header-title">Paramètres de SKy9Music</h1>
+
+<label for="language-select" id="label-language">Langue</label>
+<select id="language-select">
+  <option value="fr">Français</option>
+  <option value="en">English</option>
+  <option value="es">Español</option>
+  <option value="de">Deutsch</option>
+  <option value="it">Italiano</option>
+  <option value="pt">Português</option>
+  <option value="ru">Русский</option>
+  <option value="zh">中文</option>
+  <option value="ja">日本語</option>
+  <option value="ar">العربية</option>
+  <option value="ko">한국어</option>
+  <option value="tr">Türkçe</option>
+  <option value="nl">Nederlands</option>
+  <option value="pl">Polski</option>
+  <option value="sv">Svenska</option>
+  <option value="da">Dansk</option>
+  <option value="fi">Suomi</option>
+  <option value="cs">Čeština</option>
+  <option value="ro">Română</option>
+  <option value="hu">Magyar</option>
+  <option value="el">Ελληνικά</option>
+  <option value="th">ไทย</option>
+  <option value="hi">हिन्दी</option>
+  <option value="id">Bahasa Indonesia</option>
+  <option value="vi">Tiếng Việt</option>
+  <option value="he">עברית</option>
+  <option value="uk">Українська</option>
+</select>
+<div class="status" id="lang-status"></div>
+
+
+      <button class="Accueil-btn" id="Accueil-btn" onclick="window.location.href='tuneflow.html'">Accueil</button>
+
+
+        <div class="footer-links">
+          <p>Made with ❤️ by SKy9Music Team</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    const languageSelect = document.getElementById('language-select');
+    const langStatus = document.getElementById('lang-status');
+    const restartStatus = document.getElementById('restart-status');
+
+    const headerTitle = document.getElementById('header-title');
+    const labelLanguage = document.getElementById('label-language');
+    const pageTitle = document.getElementById('page-title');
+
+const translations = {
+  fr: {
+    title: "Paramètres - SKy9Music",
+    header: "Paramètres de SKy9Music",
+    labelLang: "Langue",
+    langStatus: "Langue définie sur : FR",
+    restartText: "Redémarrer l'application",
+    accueilText: "🏠​ Accueil",
+    websiteText: "Accéder au site web"
+  },
+  en: {
+    title: "Settings - SKy9Music",
+    header: "SKy9Music Settings",
+    labelLang: "Language",
+    langStatus: "Language set to: EN",
+    restartText: "Restart the app",
+    accueilText: "🏠​ Home",
+    websiteText: "Visit website"
+  },
+  es: {
+    title: "Configuración - SKy9Music",
+    header: "Configuración de SKy9Music",
+    labelLang: "Idioma",
+    langStatus: "Idioma seleccionado: ES",
+    restartText: "Reiniciar la aplicación",
+    accueilText: "🏠​ Inicio",
+    websiteText: "Visitar sitio web"
+  },
+  de: {
+    title: "Einstellungen - SKy9Music",
+    header: "SKy9Music-Einstellungen",
+    labelLang: "Sprache",
+    langStatus: "Sprache eingestellt auf: DE",
+    restartText: "App neu starten",
+    accueilText: "🏠​ Startseite",
+    websiteText: "Webseite besuchen"
+  },
+  it: {
+    title: "Impostazioni - SKy9Music",
+    header: "Impostazioni di SKy9Music",
+    labelLang: "Lingua",
+    langStatus: "Lingua impostata su: IT",
+    restartText: "Riavvia l'app",
+    accueilText: "🏠​ Home",
+    websiteText: "Visita il sito web"
+  },
+  pt: {
+    title: "Configurações - SKy9Music",
+    header: "Configurações do SKy9Music",
+    labelLang: "Idioma",
+    langStatus: "Idioma definido para: PT",
+    restartText: "Reiniciar o aplicativo",
+    accueilText: "🏠​ Início",
+    websiteText: "Visitar site"
+  },
+  ru: {
+    title: "Настройки - SKy9Music",
+    header: "Настройки SKy9Music",
+    labelLang: "Язык",
+    langStatus: "Язык установлен: RU",
+    restartText: "Перезапустить приложение",
+    accueilText: "🏠​ Главная",
+    websiteText: "Посетить сайт"
+  },
+  zh: {
+    title: "设置 - SKy9Music",
+    header: "SKy9Music 设置",
+    labelLang: "语言",
+    langStatus: "当前语言：中文",
+    restartText: "重启应用程序",
+    accueilText: "🏠​ 首页",
+    websiteText: "访问网站"
+  },
+  ja: {
+    title: "設定 - SKy9Music",
+    header: "SKy9Music の設定",
+    labelLang: "言語",
+    langStatus: "言語の設定：JA",
+    restartText: "アプリを再起動",
+    accueilText: "🏠​ ホーム",
+    websiteText: "ウェブサイトへ"
+  },
+  ar: {
+    title: "الإعدادات - SKy9Music",
+    header: "إعدادات SKy9Music",
+    labelLang: "اللغة",
+    langStatus: "تم تعيين اللغة: AR",
+    restartText: "إعادة تشغيل التطبيق",
+    accueilText: "🏠​ الصفحة الرئيسية",
+    websiteText: "زيارة الموقع"
+  },
+  ko: {
+    title: "설정 - SKy9Music",
+    header: "SKy9Music 설정",
+    labelLang: "언어",
+    langStatus: "언어 설정됨: KO",
+    restartText: "앱 다시 시작",
+    accueilText: "🏠​ 홈",
+    websiteText: "웹사이트 방문"
+  },
+  tr: {
+    title: "Ayarlar - SKy9Music",
+    header: "SKy9Music Ayarları",
+    labelLang: "Dil",
+    langStatus: "Dil ayarlandı: TR",
+    restartText: "Uygulamayı yeniden başlat",
+    accueilText: "🏠​ Ana Sayfa",
+    websiteText: "Web sitesini ziyaret et"
+  },
+  nl: {
+    title: "Instellingen - SKy9Music",
+    header: "SKy9Music Instellingen",
+    labelLang: "Taal",
+    langStatus: "Taal ingesteld op: NL",
+    restartText: "App opnieuw starten",
+    accueilText: "🏠​ Startpagina",
+    websiteText: "Website bezoeken"
+  },
+  pl: {
+    title: "Ustawienia - SKy9Music",
+    header: "Ustawienia SKy9Music",
+    labelLang: "Język",
+    langStatus: "Ustawiono język: PL",
+    restartText: "Zrestartuj aplikację",
+    accueilText: "🏠​ Strona główna",
+    websiteText: "Odwiedź stronę"
+  },
+  sv: {
+    title: "Inställningar - SKy9Music",
+    header: "SKy9Music-inställningar",
+    labelLang: "Språk",
+    langStatus: "Språk inställt på: SV",
+    restartText: "Starta om appen",
+    accueilText: "🏠​ Hem",
+    websiteText: "Besök webbplats"
+  },
+  da: {
+    title: "Indstillinger - SKy9Music",
+    header: "SKy9Music Indstillinger",
+    labelLang: "Sprog",
+    langStatus: "Sprog indstillet til: DA",
+    restartText: "Genstart appen",
+    accueilText: "🏠​ Start",
+    websiteText: "Besøg hjemmeside"
+  },
+  fi: {
+    title: "Asetukset - SKy9Music",
+    header: "SKy9Music-asetukset",
+    labelLang: "Kieli",
+    langStatus: "Kieli asetettu: FI",
+    restartText: "Käynnistä sovellus uudelleen",
+    accueilText: "🏠​ Koti",
+    websiteText: "Vieraile verkkosivulla"
+  },
+  cs: {
+    title: "Nastavení - SKy9Music",
+    header: "Nastavení SKy9Music",
+    labelLang: "Jazyk",
+    langStatus: "Jazyk nastaven na: CS",
+    restartText: "Restartovat aplikaci",
+    accueilText: "🏠​ Domů",
+    websiteText: "Navštívit web"
+  },
+  ro: {
+    title: "Setări - SKy9Music",
+    header: "Setările SKy9Music",
+    labelLang: "Limbă",
+    langStatus: "Limba setată: RO",
+    restartText: "Repornește aplicația",
+    accueilText: "🏠​ Acasă",
+    websiteText: "Vizitează site-ul"
+  },
+  hu: {
+    title: "Beállítások - SKy9Music",
+    header: "SKy9Music beállításai",
+    labelLang: "Nyelv",
+    langStatus: "Beállított nyelv: HU",
+    restartText: "Alkalmazás újraindítása",
+    accueilText: "🏠​ Kezdőlap",
+    websiteText: "Weboldal megtekintése"
+  },
+  el: {
+    title: "Ρυθμίσεις - SKy9Music",
+    header: "Ρυθμίσεις SKy9Music",
+    labelLang: "Γλώσσα",
+    langStatus: "Γλώσσα ορίστηκε: EL",
+    restartText: "Επανεκκίνηση εφαρμογής",
+    accueilText: "🏠​ Αρχική",
+    websiteText: "Επίσκεψη ιστοσελίδας"
+  },
+  th: {
+    title: "การตั้งค่า - SKy9Music",
+    header: "การตั้งค่า SKy9Music",
+    labelLang: "ภาษา",
+    langStatus: "ตั้งค่าภาษาเป็น: TH",
+    restartText: "รีสตาร์ทแอป",
+    accueilText: "🏠​ หน้าแรก",
+    websiteText: "เยี่ยมชมเว็บไซต์"
+  },
+  hi: {
+    title: "सेटिंग्स - SKy9Music",
+    header: "Sonarize सेटिंग्स",
+    labelLang: "भाषा",
+    langStatus: "भाषा सेट की गई: HI",
+    restartText: "ऐप को पुनरारंभ करें",
+    accueilText: "🏠​ मुख्य पृष्ठ",
+    websiteText: "वेबसाइट पर जाएं"
+  },
+  id: {
+    title: "Pengaturan - SKy9Music",
+    header: "Pengaturan SKy9Music",
+    labelLang: "Bahasa",
+    langStatus: "Bahasa diatur ke: ID",
+    restartText: "Mulai ulang aplikasi",
+    accueilText: "🏠​ Beranda",
+    websiteText: "Kunjungi situs web"
+  },
+  vi: {
+    title: "Cài đặt - SKy9Music",
+    header: "Cài đặt SKy9Music",
+    labelLang: "Ngôn ngữ",
+    langStatus: "Ngôn ngữ đã đặt: VI",
+    restartText: "Khởi động lại ứng dụng",
+    accueilText: "🏠​ Trang chủ",
+    websiteText: "Truy cập trang web"
+  },
+  he: {
+    title: "הגדרות - SKy9Music",
+    header: "הגדרות SKy9Music",
+    labelLang: "שפה",
+    langStatus: "השפה שנבחרה: HE",
+    restartText: "הפעל מחדש את האפליקציה",
+    accueilText: "🏠​ דף הבית",
+    websiteText: "בקר באתר"
+  },
+  uk: {
+    title: "Налаштування - SKy9Music",
+    header: "Налаштування SKy9Music",
+    labelLang: "Мова",
+    langStatus: "Мову встановлено: UK",
+    restartText: "Перезапустити застосунок",
+    accueilText: "🏠​ Головна",
+    websiteText: "Перейти на сайт"
+  }
+};
+
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      pageTitle.textContent = t.title;
+      headerTitle.textContent = t.header;
+      labelLanguage.textContent = t.labelLang;
+      langStatus.textContent = t.langStatus;
+      document.getElementById('restart-btn').textContent = t.restartText;
+      document.getElementById('website-btn').textContent = t.websiteText;
+      document.getElementById('Accueil-btn').textContent = t.accueilText;
+    }
+
+    languageSelect.addEventListener('change', () => {
+      const selectedLang = languageSelect.value;
+      localStorage.setItem('appLang', selectedLang);
+      applyLanguage(selectedLang);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('appLang') || 'en';
+      languageSelect.value = savedLang;
+      applyLanguage(savedLang);
+    });
+
+    document.getElementById('restart-btn')?.addEventListener('click', () => {
+      restartStatus.textContent = "⏳ Redémarrage...";
+      setTimeout(() => {
+        window.electronAPI?.relaunch?.();
+      }, 1000);
+    });
+
+    document.getElementById('website-btn')?.addEventListener('click', () => {
+      window.open("https://tuneflow.app", "_blank");
+    });
+
+  </script>
+
+  <script>
+    // Fonction pour dessiner les étoiles filantes
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    let stars = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < 100; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          radius: Math.random() * 1.5,
+          dx: -Math.random() * 0.5 - 0.2,
+          dy: Math.random() * 0.2
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'white';
+      for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+        ctx.fill();
+        s.x += s.dx;
+        s.y += s.dy;
+        if (s.x < 0 || s.y > h) {
+          s.x = w;
+          s.y = Math.random() * h;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      resize();
+      initStars();
+    });
+
+    resize();
+    initStars();
+    animate();
+
+      window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('minimize')?.addEventListener('click', () => {
+      window.electronAPI.minimize();
+    });
+
+    document.getElementById('maximize')?.addEventListener('click', () => {
+      window.electronAPI.maximize();
+    });
+
+    document.getElementById('close')?.addEventListener('click', () => {
+      window.electronAPI.close();
+    });
+  });
+  </script>
+</body>
+</html>

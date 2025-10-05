@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="ico.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sky9Music</title>
+<style>
+    body {
+      background: linear-gradient(to bottom, #00ffea 0%, #001749 300px);
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+</style>
+
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gotham', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  
+    body {
+    background-color: #121212;
+    color: #ffffff;
+    line-height: 1.5;
+  }
+  
+  .titlebar-spotify {
+  height: 32px;
+  width: 100%;
+  background: #fbff0000;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  -webkit-app-region: drag;
+  padding: 0 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.drag-region {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: bold;
+  color: #b3b3b3;
+}
+
+.window-controls {
+  display: flex;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.window-controls button {
+  width: 32px;
+  height: 28px;
+  background: transparent;
+  color: #b3b3b3;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 28px;
+  padding: 0;
+}
+
+.window-controls button:hover {
+  background-color: #3e3e3e;
+}
+
+.window-controls .close:hover {
+  background-color: #e81123;
+  color: white;
+}
+  
+.main-content {
+  margin-top: 32px; /* Décale le contenu sous la titlebar */
+}
+
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  
+  .logo {
+    margin-bottom: 18px;
+    padding-left: 12px;
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  .nav-menu {
+    margin-bottom: 24px;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    color: #b3b3b3;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    font-weight: 700;
+    transition: color 0.2s ease;
+  }
+  
+  .nav-item:hover {
+    color: #ffffff;
+  }
+  
+  .nav-item.active {
+    color: #ffffff;
+    background-color: #ffffff;
+  }
+  
+  .nav-item i {
+    margin-right: 16px;
+    font-size: 20px;
+  }
+  
+  .library {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+  }
+  
+  .library-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #b3b3b3;
+    margin-bottom: 16px;
+  }
+  
+  .library-title {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  
+  .library-title i {
+    margin-right: 12px;
+  }
+  
+  .library-actions i {
+    margin-left: 16px;
+    cursor: pointer;
+  }
+  
+  .library-actions i:hover {
+    color: #ffffff;
+  }
+  
+  .playlist {
+    padding: 12px;
+    background-color: #242424;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .playlist-header {
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  
+  .playlist-action {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff1a;
+    color: #ffffff;
+    border-radius: 32px;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .playlist-action:hover {
+    background-color: #ffffff33;
+  }
+  
+  /* Main content styling */
+  .main-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 16px 24px 72px 24px;
+    background: linear-gradient(to bottom, #fbff0000 0%, #12121200 300px);
+  }
+  
+/* Sidebar */
+#sidebar {
+  width: 250px;
+  height: 100vh;
+        background: linear-gradient(to bottom, #00ffea 0%, #001749 300px);
+  color: white;
+  padding-top: 20px;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Initialement cachée */
+  transition: left 0.3s ease; /* Animation pour l'ouverture/fermeture */
+}
+
+.sidebar-header {
+  text-align: center;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 15px;
+  text-align: center;
+}
+
+.sidebar-menu li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+}
+
+.sidebar-menu li:hover {
+  background: linear-gradient(to bottom, #00ffea 0%, #001749 300px);
+}
+
+/* Main content */
+#main-content {
+  margin-left: 0;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+#player {
+  margin-top: 20px;
+}
+
+/* Bouton toggle de la sidebar */
+.toggle-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  background-color: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 16px 0;
+  }
+  
+  .navigation-buttons {
+    display: flex;
+  }
+  
+  .nav-btn {
+    background-color: #000000cc;
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+  
+  .search-container {
+    flex-grow: 1;
+
+    max-width: 364px;
+      
+  }
+  
+  #search {    
+ 
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 32px;
+    border: none;    
+    background-color: #ffffff1a;
+    color: #ffffff;
+    font-size: 14px;
+  }
+  
+  #search:focus {   
+
+    outline: none;    
+
+    background-color: #ffffff33;
+  }
+  
+  .user-profile {
+    background-color: #000000cc;
+    border-radius: 32px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #535353;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+  }
+  
+  /* Content sections */
+  .section {
+    margin-bottom: 32px;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  .see-all {
+    color: #b3b3b3;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .see-all:hover {
+    text-decoration: underline;
+    color: #ffffff;
+  }
+  
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+    padding: 0;
+  }
+  
+      .song {
+      background: #2a2a40;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .song:hover {
+      transform: translateY(-5px);
+      background: #353552;
+    }
+
+    .song img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .song-info {
+      padding: 15px;
+    }
+
+    .song-info strong {
+      font-size: 18px;
+      display: block;
+    }
+
+    .song-info em {
+      font-size: 14px;
+      color: #aaa;
+    }
+  
+  /* Player styling */
+  .player {
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.2) !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: transparent !important;
+    padding: 16px 16px;
+    border-top: 1px solid #a7a518;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+  }
+  
+  
+  .now-playing {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    min-width: 180px;
+  }
+  
+  #album-cover-container {
+    margin-right: 14px;
+    flex-shrink: 0;
+  }
+  
+  #album-cover {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+  }
+  
+  .song-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  #current-song {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .song-artist-player {
+    font-size: 12px;
+    color: #b3b3b3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .like-button {
+    color: #b3b3b3;
+    margin-left: 16px;
+    cursor: pointer;
+  }
+  
+  .like-button:hover {
+    color: #ffffff;
+  }
+  
+  .player-center {
+    flex-grow: 1;
+    max-width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  button {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 8px;
+    transition: color 0.2s ease;
+  }
+  
+  button:hover {
+    color: #ffffff;
+  }
+  
+  #play-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    color: #000000;
+    font-size: 16px;
+  }
+  
+  #play-btn:hover {
+    transform: scale(1.06);
+    color: #000000;
+  }
+  
+  .progress-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .timer {
+    font-size: 12px;
+    color: #ffffff;
+    min-width: 40px;
+    text-align: center;
+  }
+  
+  .progress-bar {
+    flex-grow: 1;
+    height: 4px;
+    background-color: #5a5a5a;
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .progress-bar:hover span {
+    background-color: #0059ff;
+  }
+  
+  .progress-bar:hover::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #1d7bb9;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    margin-right: -6px;
+  }
+  
+  .progress-bar span {
+    display: block;
+    height: 100%;
+    background-color: #00eeff;
+    border-radius: 2px;
+    width: 30%;
+  }
+  
+  .player-right {
+    width: 30%;
+    min-width: 180px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .extra-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .volume-control {
+    display: flex;
+    align-items: center;
+    width: 125px;
+  }
+  
+  .volume-icon {
+    margin-right: 8px;
+    color: #00eeff;
+  }
+  
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background-color: #5a5a5a;
+    border-radius: 2px;
+    outline: none;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+  }
+  
+  input[type="range"]:hover::-webkit-slider-thumb {
+    opacity: 1;
+  }
+  
+  input[type="range"]:hover {
+    background: linear-gradient(to right, #1d54b9 0%, #1d8db9 70%, #5a5a5a 70%, #5a5a5a 100%);
+  }
+  
+  #audio {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -240px;
+    top: 0;
+    bottom: 0;
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .sidebar.visible {
+    left: 0;
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+  @media (min-width: 769px) {
+  .main-content {
+    margin-top: 32px;
+  }
+}
+  
+  /* Responsive adjustments */
+  @media (min-width: 768px) {
+      main {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    
+    .logo {
+      text-align: center;
+      padding: 0;
+    }
+    
+    .logo img {
+      height: 24px;
+    }
+    
+    .nav-item span, .library-title span, .playlist {
+      display: none;
+    }
+    
+    .nav-item {
+      justify-content: center;
+    }
+    
+    .nav-item i {
+      margin-right: 0;
+    }
+    
+    .library-header {
+      justify-content: center;
+    }
+    
+    .player-right {
+      display: none;
+    }
+    
+    .player-center {
+      max-width: 60%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .now-playing {
+      width: 40%;
+    }
+    
+    .player-center {
+      max-width: 60%;
+    }
+    
+    .gallery {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .now-playing {
+      width: 50%;
+    }
+    
+    .player-center {
+      max-width: 50%;
+    }
+    
+    .controls button:not(#play-btn) {
+      display: none;
+    }
+    
+    .gallery {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+  }
+
+    @media (max-width: 768px) {
+  .player {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .controls button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .song-title {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+  /* Font Awesome style icons */
+  .fa {
+    font-weight: 900;
+    display: inline-block;
+  }
+
+      canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+</style>
+  <canvas id="stars"></canvas>
+
+
+
+
+  <!-- Sidebar -->
+<div id="sidebar">
+  <div class="sidebar-header">
+    <h2 id="sidebar-title">Sky9Music</h2>
+  </div>
+
+  <ul class="sidebar-menu">
+    <li><a href="Sky9Music.html" id="home-link">Accueil</a></li>
+    <li><a href="news.html" id="news-link">Nouveauté</a></li>
+    <li><a href="paramètres.html" id="settings-link">Paramètres</a></li>
+    <li><a href="about.html" id="about-link">À propos</a></li>
+  </ul>
+  </div>
+</div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="topbar">
+        <div class="navigation-buttons">
+
+  <button id="toggleSidebarBtn" class="toggle-btn">☰</button>
+        </div>
+
+<!-- Main Content -->
+
+        
+        <div class="search-container">
+          <input type="text" id="search" placeholder="Rechercher des morceaux..." oninput="searchSongs()">
+        </div>
+        
+
+<div class="user-profile" onclick="window.location.href=">
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Toute les musique disponible</h2>
+        </div>
+        
+        <div class="gallery" id="gallery">
+          <!-- Songs will be loaded here -->
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <a href="#" class="see-all">Revenir en haut</a>
+        </div>
+        
+        <div class="gallery">
+          <!-- More songs can be added here -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Player -->
+  <div class="player" id="player">
+    <div class="now-playing">
+      <div id="album-cover-container">
+        <img id="album-cover" src="/api/placeholder/56/56" alt="">
+      </div>
+      <div class="song-info">
+        <p id="current-song"></p>
+        <p class="song-artist-player"></p>
+      </div>
+      <div class="like-button">❤</div>
+    </div>
+    
+    <div class="player-center">
+      <div class="controls">
+  <button id="alt-btn" style="background-color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px;">🔀</button>
+  <button id="prev-btn" style="background-color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px;">⏮</button>
+  <button id="play-btn" style="background-color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px;">▶</button>
+  <button id="next-btn" style="background-color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px;">⏭</button>
+  <button id="replay-btn" style="background-color: white; border-radius: 50%; width: 40px; height: 40px; padding: 5px; border: none;">
+  <img src="replay-icon.svg" alt="Replay" style="width: 100%; height: 100%; object-fit: contain;" />
+</button>
+      </div>
+      
+      <div class="progress-container">
+        <div class="timer" id="current-time">0:00</div>
+        <div class="progress-bar">
+          <span id="progress"></span>
+        </div>
+        <div class="timer" id="total-time">0:00</div>
+      </div>
+    </div>
+    
+    <div class="player-right">
+      <div class="extra-controls">
+        <button>📃</button>
+        <button>🔊</button>
+        <div class="volume-control">
+          <button>🔊</button>
+          <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+        </div>
+      </div>
+    </div>
+    
+    <audio id="audio" controls>
+      <source id="audio-source" src="" type="audio/mp3">
+      Votre navigateur ne prend pas en charge la balise audio.
+    </audio>
+  </div>
+
+  <script>
+    // Sample songs data - this would be loaded from a server in a real app
+    const songs = [
+    { 
+    title: "Melodia Extraordinária", 
+    artist: "DJ LE4K, rodricci, motty", 
+    src: "song1.mp3", 
+    img: "https://i.imgur.com/CRPcFdS.jpeg" 
+  },
+      { 
+    title: "Melodia Extraordinária - Slowed", 
+    artist: "DJ LE4K, rodricci, motty", 
+    src: "song2.mp3", 
+    img: "https://i.imgur.com/CRPcFdS.jpeg" 
+  },
+        { 
+    title: "Melodia Extraordinária - Super Slowed", 
+    artist: "DJ LE4K, rodricci, motty", 
+    src: "song3.mp3", 
+    img: "https://i.imgur.com/CRPcFdS.jpeg" 
+  },
+          { 
+    title: "Melodia Extraordinária - Ultra Slowed", 
+    artist: "DJ LE4K, rodricci, motty", 
+    src: "song4.mp3", 
+    img: "https://i.imgur.com/CRPcFdS.jpeg" 
+  },
+            { 
+    title: "Melodia Extraordinária - Speed Slowed", 
+    artist: "DJ LE4K, rodricci, motty", 
+    src: "song5.mp3", 
+    img: "https://i.imgur.com/CRPcFdS.jpeg" 
+  },
+           { 
+    title: "MELODIA INESPERADA", 
+    artist: "FR3ST, DJ LE4K", 
+    src: "song6.mp3", 
+    img: "https://i.imgur.com/YBd5zwK.jpeg" 
+  },
+           { 
+    title: "MELODIA INESPERADA - SPEED", 
+    artist: "FR3ST, DJ LE4K", 
+    src: "song7.mp3", 
+    img: "https://i.imgur.com/YBd5zwK.jpeg" 
+  },
+           { 
+    title: "MELODIA INESPERADA - SLOWED", 
+    artist: "FR3ST, DJ LE4K", 
+    src: "song8.mp3", 
+    img: "https://i.imgur.com/YBd5zwK.jpeg" 
+  },
+           { 
+    title: "MELODIA INESPERADA - SUPER SLOWED", 
+    artist: "FR3ST, DJ LE4K", 
+    src: "song9.mp3", 
+    img: "https://i.imgur.com/YBd5zwK.jpeg" 
+  },
+  { 
+    title: "MELODIA FENOMENAL", 
+    artist: "SKYZEN", 
+    src: "song10.mp3", 
+    img: "https://i.imgur.com/JEFAgk5.jpeg" 
+  },
+    { 
+    title: "MELODIA FENOMENAL - SLOWED", 
+    artist: "SKYZEN", 
+    src: "song11.mp3", 
+    img: "https://i.imgur.com/JEFAgk5.jpeg" 
+  },
+    { 
+    title: "MELODIA FENOMENAL - SUPER SLOWED", 
+    artist: "SKYZEN", 
+    src: "song12.mp3", 
+    img: "https://i.imgur.com/JEFAgk5.jpeg" 
+  },
+    { 
+    title: "MELODIA FENOMENAL - SPED UP", 
+    artist: "SKYZEN", 
+    src: "song13.mp3", 
+    img: "https://i.imgur.com/JEFAgk5.jpeg" 
+  },
+    ];
+
+  // Variables globales
+    let currentSongIndex = 0;
+    let isPlaying = false;
+    let audio = document.getElementById('audio');
+    let progress = document.getElementById('progress');
+    let volumeControl = document.getElementById('volume');
+    let replayEnabled = false;
+
+    // Fonction pour afficher les chansons dans la galerie
+    function displaySongs(filteredSongs = songs) {
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = '';
+      filteredSongs.forEach((song, index) => {
+        const songElement = document.createElement('div');
+        songElement.classList.add('song');
+        songElement.innerHTML = `
+          <img src="${song.img}" alt="Cover of ${song.title}">
+          <h3>${song.title}</h3>
+          <p>${song.artist}</p>
+        `;
+        songElement.addEventListener('click', () => playSong(filteredSongs, index));
+        gallery.appendChild(songElement);
+      });
+    }
+
+    // Fonction pour jouer une chanson
+    function playSong(filteredSongs, index) {
+      const song = filteredSongs[index];
+      const audioSource = document.getElementById('audio-source');
+      const currentSongText = document.getElementById('current-song');
+      const albumCover = document.getElementById('album-cover');
+      
+      audioSource.src = song.src;
+      audio.load();
+      audio.play();
+      albumCover.src = song.img;
+      currentSongText.innerText = `${song.title} - ${song.artist}`;
+
+      isPlaying = true;
+      document.getElementById('play-btn').innerText = '⏸';
+      currentSongIndex = index;
+    }
+
+    // Fonction pour basculer play/pause
+    function togglePlayPause() {
+      if (isPlaying) {
+        audio.pause();
+        document.getElementById('play-btn').innerText = '▶';
+      } else {
+        audio.play();
+        document.getElementById('play-btn').innerText = '⏸';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    // Fonction pour passer à la chanson suivante
+    function nextSong() {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      playSong(songs, currentSongIndex);
+    }
+
+    // Fonction pour revenir à la chanson précédente
+    function prevSong() {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      playSong(songs, currentSongIndex);
+    }
+
+    // Fonction de recherche des chansons
+    function searchSongs() {
+      const searchTerm = document.getElementById('search').value.toLowerCase();
+      const filteredSongs = songs.filter(song => 
+        song.title.toLowerCase().includes(searchTerm) ||
+        song.artist.toLowerCase().includes(searchTerm)
+      );
+      displaySongs(filteredSongs);
+    }
+
+    // Mise à jour de la barre de progression
+    audio.addEventListener('timeupdate', () => {
+      const progressPercent = (audio.currentTime / audio.duration) * 100;
+      progress.style.width = progressPercent + '%';
+    });
+
+    // Ajustement du volume
+    volumeControl.addEventListener('input', () => {
+      audio.volume = volumeControl.value;
+    });
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+      displaySongs();
+      document.getElementById('play-btn').addEventListener('click', togglePlayPause);
+      document.getElementById('next-btn').addEventListener('click', nextSong);
+      document.getElementById('prev-btn').addEventListener('click', prevSong);
+    });
+
+    // Fonction pour formater le temps en minutes:secondes
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+
+    // Mise à jour de la barre de progression et du timer
+    audio.addEventListener('timeupdate', () => {
+      const currentTime = audio.currentTime;
+      const duration = audio.duration;
+
+      // Mettre à jour les temps
+      document.getElementById('current-time').textContent = formatTime(currentTime);
+      document.getElementById('total-time').textContent = formatTime(duration);
+    });
+
+    audio.addEventListener('ended', () => {
+      if (replayEnabled) {
+        audio.currentTime = 0;
+        audio.play();
+      } else {
+        nextSong();
+      }
+    });
+
+    // Fonction pour activer ou désactiver le replay
+    function toggleReplay() {
+      replayEnabled = true;
+      document.getElementById('replay-btn').disabled = true;
+      document.getElementById('replay-btn').innerHTML = '🔂';
+    }
+
+    document.getElementById('replay-btn').addEventListener('click', toggleReplay);
+
+    // Fonction pour dessiner les étoiles filantes
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    let stars = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < 100; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          radius: Math.random() * 1.5,
+          dx: -Math.random() * 0.5 - 0.2,
+          dy: Math.random() * 0.2
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'white';
+      for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+        ctx.fill();
+        s.x += s.dx;
+        s.y += s.dy;
+        if (s.x < 0 || s.y > h) {
+          s.x = w;
+          s.y = Math.random() * h;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      resize();
+      initStars();
+    });
+
+    resize();
+    initStars();
+    animate();
+
+
+    
+   </script>
+
+<script>
+const translations = {
+  fr: {
+    searchPlaceholder: "Rechercher des morceaux...",
+    sectionTitle: "Toutes les musiques disponibles",
+    backToTop: "Revenir en haut",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Accueil",
+      news: "Nouveauté",
+      settings: "Paramètres",
+      about: "À propos"
+    }
+  },
+  en: {
+    searchPlaceholder: "Search songs...",
+    sectionTitle: "All available music",
+    backToTop: "Back to top",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Home",
+      news: "News",
+      settings: "Settings",
+      about: "About"
+    }
+  },
+  es: {
+    searchPlaceholder: "Buscar canciones...",
+    sectionTitle: "Toda la música disponible",
+    backToTop: "Volver arriba",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Inicio",
+      settings: "Configuración",
+      about: "Acerca de"
+    }
+  },
+  de: {
+    searchPlaceholder: "Lieder suchen...",
+    sectionTitle: "Alle verfügbaren Musiktitel",
+    backToTop: "Zurück nach oben",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Startseite",
+      settings: "Einstellungen",
+      about: "Über"
+    }
+  },
+  it: {
+    searchPlaceholder: "Cerca brani...",
+    sectionTitle: "Tutta la musica disponibile",
+    backToTop: "Torna su",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Home",
+      settings: "Impostazioni",
+      about: "Info"
+    }
+  },
+  pt: {
+    searchPlaceholder: "Procurar músicas...",
+    sectionTitle: "Todas as músicas disponíveis",
+    backToTop: "Voltar ao topo",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Início",
+      settings: "Configurações",
+      about: "Sobre"
+    }
+  },
+  ru: {
+    searchPlaceholder: "Поиск песен...",
+    sectionTitle: "Вся доступная музыка",
+    backToTop: "Вернуться наверх",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Главная",
+      settings: "Настройки",
+      about: "О нас"
+    }
+  },
+  zh: {
+    searchPlaceholder: "搜索歌曲...",
+    sectionTitle: "所有可用音乐",
+    backToTop: "返回顶部",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "首页",
+      settings: "设置",
+      about: "关于"
+    }
+  },
+  ja: {
+    searchPlaceholder: "曲を検索...",
+    sectionTitle: "利用可能なすべての音楽",
+    backToTop: "トップに戻る",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "ホーム",
+      settings: "設定",
+      about: "情報"
+    }
+  },
+  ar: {
+    searchPlaceholder: "ابحث عن الأغاني...",
+    sectionTitle: "جميع الموسيقى المتاحة",
+    backToTop: "العودة للأعلى",
+    discord: "ديسكورد",
+    sidebar: {
+      title: "Sky9Music",
+      home: "الرئيسية",
+      settings: "الإعدادات",
+      about: "حول"
+    }
+  },
+  ko: {
+    searchPlaceholder: "노래 검색...",
+    sectionTitle: "모든 사용 가능한 음악",
+    backToTop: "맨 위로 돌아가기",
+    discord: "디스코드",
+    sidebar: {
+      title: "Sky9Music",
+      home: "홈",
+      settings: "설정",
+      about: "정보"
+    }
+  },
+  tr: {
+    searchPlaceholder: "Şarkı ara...",
+    sectionTitle: "Tüm mevcut müzikler",
+    backToTop: "Başa dön",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Ana sayfa",
+      settings: "Ayarlar",
+      about: "Hakkında"
+    }
+  },
+  nl: {
+    searchPlaceholder: "Zoek nummers...",
+    sectionTitle: "Alle beschikbare muziek",
+    backToTop: "Terug naar boven",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Startpagina",
+      settings: "Instellingen",
+      about: "Over"
+    }
+  },
+  pl: {
+    searchPlaceholder: "Szukaj piosenek...",
+    sectionTitle: "Wszystkie dostępne utwory",
+    backToTop: "Wróć na górę",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Strona główna",
+      settings: "Ustawienia",
+      about: "O nas"
+    }
+  },
+  sv: {
+    searchPlaceholder: "Sök låtar...",
+    sectionTitle: "All tillgänglig musik",
+    backToTop: "Tillbaka till toppen",
+    discord: "Sonarize",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Hem",
+      settings: "Inställningar",
+      about: "Om"
+    }
+  },
+  no: {
+    searchPlaceholder: "Søk etter sanger...",
+    sectionTitle: "All tilgjengelig musikk",
+    backToTop: "Tilbake til toppen",
+    discord: "Sonarize",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Hjem",
+      settings: "Innstillinger",
+      about: "Om"
+    }
+  },
+  da: {
+    searchPlaceholder: "Søg efter sange...",
+    sectionTitle: "Al tilgængelig musik",
+    backToTop: "Tilbage til toppen",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Hjem",
+      settings: "Indstillinger",
+      about: "Om"
+    }
+  },
+  fi: {
+    searchPlaceholder: "Etsi kappaleita...",
+    sectionTitle: "Kaikki saatavilla oleva musiikki",
+    backToTop: "Takaisin ylös",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Koti",
+      settings: "Asetukset",
+      about: "Tietoja"
+    }
+  },
+  cs: {
+    searchPlaceholder: "Hledat písně...",
+    sectionTitle: "Všechny dostupné skladby",
+    backToTop: "Zpět nahoru",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Domů",
+      settings: "Nastavení",
+      about: "O nás"
+    }
+  },
+  ro: {
+    searchPlaceholder: "Caută melodii...",
+    sectionTitle: "Toată muzica disponibilă",
+    backToTop: "Înapoi sus",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Acasă",
+      settings: "Setări",
+      about: "Despre"
+    }
+  },
+  hu: {
+    searchPlaceholder: "Dalok keresése...",
+    sectionTitle: "Minden elérhető zene",
+    backToTop: "Vissza a tetejére",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Kezdőlap",
+      settings: "Beállítások",
+      about: "Rólunk"
+    }
+  },
+  el: {
+    searchPlaceholder: "Αναζήτηση τραγουδιών...",
+    sectionTitle: "Όλη η διαθέσιμη μουσική",
+    backToTop: "Επιστροφή στην κορυφή",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Αρχική",
+      settings: "Ρυθμίσεις",
+      about: "Σχετικά"
+    }
+  },
+  th: {
+    searchPlaceholder: "ค้นหาเพลง...",
+    sectionTitle: "เพลงทั้งหมดที่มีอยู่",
+    backToTop: "กลับไปด้านบน",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "หน้าแรก",
+      settings: "การตั้งค่า",
+      about: "เกี่ยวกับ"
+    }
+  },
+  hi: {
+    searchPlaceholder: "गीत खोजें...",
+    sectionTitle: "सभी उपलब्ध संगीत",
+    backToTop: "ऊपर जाएं",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "होम",
+      settings: "सेटिंग्स",
+      about: "के बारे में"
+    }
+  },
+  id: {
+    searchPlaceholder: "Cari lagu...",
+    sectionTitle: "Semua musik yang tersedia",
+    backToTop: "Kembali ke atas",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Beranda",
+      settings: "Pengaturan",
+      about: "Tentang"
+    }
+  },
+  vi: {
+    searchPlaceholder: "Tìm kiếm bài hát...",
+    sectionTitle: "Tất cả nhạc có sẵn",
+    backToTop: "Trở lại đầu trang",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Trang chủ",
+      settings: "Cài đặt",
+      about: "Về chúng tôi"
+    }
+  },
+  he: {
+    searchPlaceholder: "חפש שירים...",
+    sectionTitle: "כל המוזיקה הזמינה",
+    backToTop: "חזרה למעלה",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "דף הבית",
+      settings: "הגדרות",
+      about: "אודות"
+    }
+  },
+  uk: {
+    searchPlaceholder: "Пошук пісень...",
+    sectionTitle: "Уся доступна музика",
+    backToTop: "Повернутися вгору",
+    discord: "Discord",
+    sidebar: {
+      title: "Sky9Music",
+      home: "Головна",
+      settings: "Налаштування",
+      about: "Про нас"
+    }
+  }
+};
+
+  function applyTranslations() {
+    const lang = localStorage.getItem("appLang") || "en";
+    const t = translations[lang];
+
+    document.getElementById("search").placeholder = t.searchPlaceholder;
+    const sectionTitle = document.querySelector(".section-title");
+    if (sectionTitle) sectionTitle.textContent = t.sectionTitle;
+
+    const seeAll = document.querySelector(".see-all");
+    if (seeAll) seeAll.textContent = t.backToTop;
+
+    const discordText = document.querySelector(".user-profile span");
+    if (discordText) discordText.textContent = t.discord;
+
+  document.getElementById("sidebar-title").textContent = t.sidebar.title;
+  document.getElementById("home-link").textContent = t.sidebar.home;
+  document.getElementById("settings-link").textContent = t.sidebar.settings;
+  document.getElementById("about-link").textContent = t.sidebar.about;
+  }
+
+  window.addEventListener("DOMContentLoaded", applyTranslations);
+</script>
+  <script>
+          window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('minimize')?.addEventListener('click', () => {
+      window.electronAPI.minimize();
+    });
+
+    document.getElementById('maximize')?.addEventListener('click', () => {
+      window.electronAPI.maximize();
+    });
+
+    document.getElementById('close')?.addEventListener('click', () => {
+      window.electronAPI.close();
+    });
+  });
+  </script>
+  </script>
+ <script>
+const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.getElementById('main-content');
+
+// Fonction pour ouvrir/fermer la sidebar
+toggleSidebarBtn.addEventListener('click', () => {
+  const sidebarLeft = sidebar.style.left;
+  
+  // Si la sidebar est cachée, on l'affiche
+  if (sidebarLeft === '-250px' || sidebarLeft === '') {
+    sidebar.style.left = '0';  // Ouvrir la sidebar
+    mainContent.style.marginLeft = '250px'; // Décaler le contenu principal à droite
+  } else {
+    sidebar.style.left = '-250px'; // Cacher la sidebar
+    mainContent.style.marginLeft = '0'; // Réinitialiser le contenu principal
+  }
+});
+</script>
+
+</body>
+</html>
