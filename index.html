@@ -894,7 +894,7 @@
   <div class="player" id="player">
     <div class="now-playing">
       <div id="album-cover-container">
-        <img id="album-cover" src="/api/placeholder/56/56" alt="">
+        <img id="album-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Crect width='56' height='56' fill='%23333'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='30' fill='%2300ffea'%3E♪%3C/text%3E%3C/svg%3E" alt="">
       </div>
       <div class="song-info">
         <p id="current-song"></p>
@@ -1539,19 +1539,14 @@ const translations = {
  <script>
 const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
 const sidebar = document.getElementById('sidebar');
-const mainContent = document.getElementById('main-content');
 
-// Fonction pour ouvrir/fermer la sidebar
 toggleSidebarBtn.addEventListener('click', () => {
   const sidebarLeft = sidebar.style.left;
   
-  // Si la sidebar est cachée, on l'affiche
   if (sidebarLeft === '-250px' || sidebarLeft === '') {
-    sidebar.style.left = '0';  // Ouvrir la sidebar
-    mainContent.style.marginLeft = '250px'; // Décaler le contenu principal à droite
+    sidebar.style.left = '0';
   } else {
-    sidebar.style.left = '-250px'; // Cacher la sidebar
-    mainContent.style.marginLeft = '0'; // Réinitialiser le contenu principal
+    sidebar.style.left = '-250px';
   }
 });
 </script>

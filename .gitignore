@@ -10,6 +10,14 @@ ENV/
 build/
 dist/
 *.egg-info/
+.pythonlibs/
+
+# Uploads
+uploads/music/
+uploads/covers/
+
+# Data files
+songs.json
 
 # OS
 .DS_Store
