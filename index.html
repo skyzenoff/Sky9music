@@ -952,19 +952,43 @@
     let volumeControl = document.getElementById('volume');
     let replayEnabled = false;
 
+    // Fonction pour charger les musiques depuis le serveur
+    async function loadSongs() {
+      try {
+        const response = await fetch('/api/songs');
+        songs = await response.json();
+        displaySongs();
+        
+        if (songs.length === 0) {
+          document.getElementById('gallery').innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.7); padding: 40px;">Aucune musique disponible. <a href="admin.html" style="color: #00ffea;">Ajoutez-en via l\'administration</a></p>';
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des musiques:', error);
+        document.getElementById('gallery').innerHTML = '<p style="text-align: center; color: #ff4444; padding: 40px;">Erreur de chargement des musiques</p>';
+      }
+    }
+
     // Fonction pour afficher les chansons dans la galerie
     function displaySongs(filteredSongs = songs) {
       const gallery = document.getElementById('gallery');
       gallery.innerHTML = '';
+      
+      if (filteredSongs.length === 0 && songs.length > 0) {
+        gallery.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.7); padding: 40px;">Aucun résultat trouvé</p>';
+        return;
+      }
+      
       filteredSongs.forEach((song, index) => {
         const songElement = document.createElement('div');
         songElement.classList.add('song');
         songElement.innerHTML = `
           <img src="${song.img}" alt="Cover of ${song.title}">
-          <h3>${song.title}</h3>
-          <p>${song.artist}</p>
+          <div class="song-info">
+            <strong>${song.title}</strong>
+            <em>${song.artist}</em>
+          </div>
         `;
-        songElement.addEventListener('click', () => playSong(filteredSongs, index));
+        songElement.addEventListener('click', () => playSong(songs, songs.indexOf(song)));
         gallery.appendChild(songElement);
       });
     }
@@ -1491,7 +1515,10 @@ const translations = {
   document.getElementById("about-link").textContent = t.sidebar.about;
   }
 
-  window.addEventListener("DOMContentLoaded", applyTranslations);
+  window.addEventListener("DOMContentLoaded", () => {
+    applyTranslations();
+    loadSongs();
+  });
 </script>
   <script>
           window.addEventListener('DOMContentLoaded', () => {
