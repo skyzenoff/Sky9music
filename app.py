@@ -178,7 +178,7 @@ def upload_song():
         return jsonify({'error': 'Fichiers non sélectionnés'}), 400
     
     if not allowed_file(music_file.filename, ALLOWED_AUDIO_EXTENSIONS):
-        return jsonify({'error': 'Format audio non supporté (MP3 uniquement)'}), 400
+        return jsonify({'error': 'Format audio non supporté (flac uniquement)'}), 400
     
     if not allowed_file(cover_file.filename, ALLOWED_IMAGE_EXTENSIONS):
         return jsonify({'error': 'Format image non supporté (JPG, PNG uniquement)'}), 400

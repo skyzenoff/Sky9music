@@ -5,5 +5,33 @@
     "artist": "skyzen",
     "src": "/uploads/music/f73c0bc5-5fb7-4592-a578-e21f80a5201b.mp3",
     "img": "/uploads/covers/f73c0bc5-5fb7-4592-a578-e21f80a5201b.png"
+  },
+  {
+    "id": "2d62521f-7b97-4487-b890-e8889c5efc70",
+    "title": "VEKI VEKI SKYZEN VERSION - Slowed",
+    "artist": "skyzen",
+    "src": "/uploads/music/2d62521f-7b97-4487-b890-e8889c5efc70.mp3",
+    "img": "/uploads/covers/2d62521f-7b97-4487-b890-e8889c5efc70.png"
+  },
+  {
+    "id": "804875a7-012d-4097-95cd-be8088ad44c3",
+    "title": "VEKI VEKI SKYZEN VERSION - Super Slowed",
+    "artist": "skyzen",
+    "src": "/uploads/music/804875a7-012d-4097-95cd-be8088ad44c3.mp3",
+    "img": "/uploads/covers/804875a7-012d-4097-95cd-be8088ad44c3.png"
+  },
+  {
+    "id": "cc97b44a-4a92-43b5-9466-1b27efc39614",
+    "title": "VEKI VEKI SKYZEN VERSION - Speed Up",
+    "artist": "skyzen",
+    "src": "/uploads/music/cc97b44a-4a92-43b5-9466-1b27efc39614.mp3",
+    "img": "/uploads/covers/cc97b44a-4a92-43b5-9466-1b27efc39614.png"
+  },
+  {
+    "id": "047f9324-71c1-413f-bdf6-da3cd2a14a6f",
+    "title": "VEKI VEKI SKYZEN VERSION - Super Speed Up",
+    "artist": "skyzen",
+    "src": "/uploads/music/047f9324-71c1-413f-bdf6-da3cd2a14a6f.mp3",
+    "img": "/uploads/covers/047f9324-71c1-413f-bdf6-da3cd2a14a6f.png"
   }
 ]
