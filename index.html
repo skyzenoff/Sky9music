@@ -704,52 +704,116 @@
   
   @media (max-width: 768px) {
     .now-playing {
-      width: 40%;
+      width: 100%;
+      margin-bottom: 12px;
+      justify-content: center;
     }
     
     .player-center {
-      max-width: 60%;
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .player {
+      flex-direction: column;
+      padding: 12px 16px;
+      gap: 8px;
+    }
+    
+    .controls button {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+    }
+    
+    #play-btn {
+      width: 56px;
+      height: 56px;
+      font-size: 24px;
+    }
+    
+    .progress-container {
+      width: 100%;
     }
     
     .gallery {
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    
+    .song-info {
+      text-align: center;
+    }
+    
+    .topbar {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .search-container {
+      flex-grow: 1;
+      max-width: 100%;
+      order: 3;
+      width: 100%;
     }
   }
   
   @media (max-width: 576px) {
-    .now-playing {
-      width: 50%;
-    }
-    
-    .player-center {
-      max-width: 50%;
-    }
-    
-    .controls button:not(#play-btn) {
-      display: none;
+    .controls button:not(#play-btn):not(#prev-btn):not(#next-btn) {
+      width: 36px;
+      height: 36px;
+      font-size: 16px;
     }
     
     .gallery {
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    
+    .song img {
+      height: 140px;
+    }
+    
+    .song-info {
+      padding: 10px;
+    }
+    
+    .song-info strong {
+      font-size: 14px;
+    }
+    
+    .song-info em {
+      font-size: 12px;
+    }
+    
+    #album-cover {
+      width: 48px;
+      height: 48px;
+    }
+    
+    #current-song {
+      font-size: 12px;
+    }
+    
+    .song-artist-player {
+      font-size: 11px;
     }
   }
-
-    @media (max-width: 768px) {
-  .player {
-    flex-direction: column;
-    align-items: center;
+  
+  @media (max-width: 400px) {
+    .gallery {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .controls {
+      gap: 4px;
+    }
+    
+    .timer {
+      font-size: 11px;
+      min-width: 35px;
+    }
   }
-
-  .controls button {
-    width: 40px;
-    height: 40px;
-  }
-
-  .song-title {
-    font-size: 1rem;
-    text-align: center;
-  }
-}
 
   /* Font Awesome style icons */
   .fa {
