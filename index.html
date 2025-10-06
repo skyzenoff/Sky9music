@@ -877,87 +877,8 @@
   </div>
 
   <script>
-    // Sample songs data - this would be loaded from a server in a real app
-    const songs = [
-    { 
-    title: "Melodia Extraordinária", 
-    artist: "DJ LE4K, rodricci, motty", 
-    src: "song1.mp3", 
-    img: "https://i.imgur.com/CRPcFdS.jpeg" 
-  },
-      { 
-    title: "Melodia Extraordinária - Slowed", 
-    artist: "DJ LE4K, rodricci, motty", 
-    src: "song2.mp3", 
-    img: "https://i.imgur.com/CRPcFdS.jpeg" 
-  },
-        { 
-    title: "Melodia Extraordinária - Super Slowed", 
-    artist: "DJ LE4K, rodricci, motty", 
-    src: "song3.mp3", 
-    img: "https://i.imgur.com/CRPcFdS.jpeg" 
-  },
-          { 
-    title: "Melodia Extraordinária - Ultra Slowed", 
-    artist: "DJ LE4K, rodricci, motty", 
-    src: "song4.mp3", 
-    img: "https://i.imgur.com/CRPcFdS.jpeg" 
-  },
-            { 
-    title: "Melodia Extraordinária - Speed Slowed", 
-    artist: "DJ LE4K, rodricci, motty", 
-    src: "song5.mp3", 
-    img: "https://i.imgur.com/CRPcFdS.jpeg" 
-  },
-           { 
-    title: "MELODIA INESPERADA", 
-    artist: "FR3ST, DJ LE4K", 
-    src: "song6.mp3", 
-    img: "https://i.imgur.com/YBd5zwK.jpeg" 
-  },
-           { 
-    title: "MELODIA INESPERADA - SPEED", 
-    artist: "FR3ST, DJ LE4K", 
-    src: "song7.mp3", 
-    img: "https://i.imgur.com/YBd5zwK.jpeg" 
-  },
-           { 
-    title: "MELODIA INESPERADA - SLOWED", 
-    artist: "FR3ST, DJ LE4K", 
-    src: "song8.mp3", 
-    img: "https://i.imgur.com/YBd5zwK.jpeg" 
-  },
-           { 
-    title: "MELODIA INESPERADA - SUPER SLOWED", 
-    artist: "FR3ST, DJ LE4K", 
-    src: "song9.mp3", 
-    img: "https://i.imgur.com/YBd5zwK.jpeg" 
-  },
-  { 
-    title: "MELODIA FENOMENAL", 
-    artist: "SKYZEN", 
-    src: "song10.mp3", 
-    img: "https://i.imgur.com/JEFAgk5.jpeg" 
-  },
-    { 
-    title: "MELODIA FENOMENAL - SLOWED", 
-    artist: "SKYZEN", 
-    src: "song11.mp3", 
-    img: "https://i.imgur.com/JEFAgk5.jpeg" 
-  },
-    { 
-    title: "MELODIA FENOMENAL - SUPER SLOWED", 
-    artist: "SKYZEN", 
-    src: "song12.mp3", 
-    img: "https://i.imgur.com/JEFAgk5.jpeg" 
-  },
-    { 
-    title: "MELODIA FENOMENAL - SPED UP", 
-    artist: "SKYZEN", 
-    src: "song13.mp3", 
-    img: "https://i.imgur.com/JEFAgk5.jpeg" 
-  },
-    ];
+    // Songs data - loaded from server
+    let songs = [];
 
   // Variables globales
     let currentSongIndex = 0;
