@@ -24,11 +24,35 @@
       margin: 0 auto;
     }
     
-    h1 {
-      text-align: center;
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    h1 {
       font-size: 2.5em;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      flex: 1;
+    }
+    
+    .btn-logout {
+      background: rgba(255, 50, 50, 0.8);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-logout:hover {
+      background: rgba(255, 50, 50, 1);
+      transform: translateY(-2px);
     }
     
     .card {
@@ -227,7 +251,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>🎵 Administration Sky9Music</h1>
+    <div class="header-container">
+      <h1>🎵 Administration Sky9Music</h1>
+      <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+    </div>
     
     <div class="message" id="message"></div>
     
@@ -392,6 +419,29 @@
       }
     }
     
+    async function checkAuth() {
+      try {
+        const response = await fetch('/api/check-auth');
+        const data = await response.json();
+        
+        if (!data.authenticated) {
+          window.location.href = '/login.html';
+        }
+      } catch (error) {
+        window.location.href = '/login.html';
+      }
+    }
+    
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.href = '/login.html';
+      } catch (error) {
+        alert('Erreur lors de la déconnexion');
+      }
+    });
+    
+    checkAuth();
     loadSongs();
   </script>
 </body>
