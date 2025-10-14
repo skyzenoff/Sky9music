@@ -166,5 +166,61 @@
     "artist": "STXRLIGHT",
     "src": "/uploads/music/0b934ca1-4e22-4b1a-9f02-32f28389d4fb.mp3",
     "img": "/uploads/covers/0b934ca1-4e22-4b1a-9f02-32f28389d4fb.png"
+  },
+  {
+    "id": "781e98c4-8c92-4e57-a1e8-5a30ddc7f7e6",
+    "title": "YAAKO FUNK",
+    "artist": "DJ ASTON MANA",
+    "src": "/uploads/music/781e98c4-8c92-4e57-a1e8-5a30ddc7f7e6.mp3",
+    "img": "/uploads/covers/781e98c4-8c92-4e57-a1e8-5a30ddc7f7e6.png"
+  },
+  {
+    "id": "f232d038-cc35-49c2-9216-d009bd8eac8b",
+    "title": "YAAKO FUNK - SLOWED",
+    "artist": "DJ ASTON MANA",
+    "src": "/uploads/music/f232d038-cc35-49c2-9216-d009bd8eac8b.mp3",
+    "img": "/uploads/covers/f232d038-cc35-49c2-9216-d009bd8eac8b.png"
+  },
+  {
+    "id": "87d438cc-ce40-41f0-a51b-dafdad674fe3",
+    "title": "YAAKO FUNK - SUPER SLOWED",
+    "artist": "DJ ASTON MANA",
+    "src": "/uploads/music/87d438cc-ce40-41f0-a51b-dafdad674fe3.mp3",
+    "img": "/uploads/covers/87d438cc-ce40-41f0-a51b-dafdad674fe3.png"
+  },
+  {
+    "id": "52531692-2aff-4d77-b4e4-e043054f4319",
+    "title": "YAAKO FUNK - SPED UP",
+    "artist": "DJ ASTON MANA",
+    "src": "/uploads/music/52531692-2aff-4d77-b4e4-e043054f4319.mp3",
+    "img": "/uploads/covers/52531692-2aff-4d77-b4e4-e043054f4319.png"
+  },
+  {
+    "id": "2df2dccf-cb3d-4077-aa78-cbfdc4117ebb",
+    "title": "VISION SKYZEN VERSION",
+    "artist": "skyzen",
+    "src": "/uploads/music/2df2dccf-cb3d-4077-aa78-cbfdc4117ebb.mp3",
+    "img": "/uploads/covers/2df2dccf-cb3d-4077-aa78-cbfdc4117ebb.png"
+  },
+  {
+    "id": "1059c846-5ea3-4b5e-91cd-26a3e89c7d04",
+    "title": "VISION SKYZEN VERSION - SLOWED",
+    "artist": "skyzen",
+    "src": "/uploads/music/1059c846-5ea3-4b5e-91cd-26a3e89c7d04.mp3",
+    "img": "/uploads/covers/1059c846-5ea3-4b5e-91cd-26a3e89c7d04.png"
+  },
+  {
+    "id": "ebe4cc94-267b-4346-8712-fffdd8faf701",
+    "title": "VISION SKYZEN VERSION - SUPER SLOWED",
+    "artist": "skyzen",
+    "src": "/uploads/music/ebe4cc94-267b-4346-8712-fffdd8faf701.mp3",
+    "img": "/uploads/covers/ebe4cc94-267b-4346-8712-fffdd8faf701.png"
+  },
+  {
+    "id": "c6bb7dff-9d05-45c5-956e-de7fa7d02b8f",
+    "title": "VISION SKYZEN VERSION - SPED UP",
+    "artist": "skyzen",
+    "src": "/uploads/music/c6bb7dff-9d05-45c5-956e-de7fa7d02b8f.mp3",
+    "img": "/uploads/covers/c6bb7dff-9d05-45c5-956e-de7fa7d02b8f.png"
   }
 ]
